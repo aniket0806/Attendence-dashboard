@@ -357,7 +357,7 @@ const Sidebar = ({ isOpen }) => {
         )}
 
         {/* === EMPLOYEE MENU === */}
-        {role === 'E' || 'M'  && (
+        {(role === 'E' || role === 'M')  && (
           <>
             <div className="mb-1">
               <div 
