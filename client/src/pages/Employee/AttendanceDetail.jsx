@@ -34,7 +34,7 @@ const AttendanceDetail = () => {
       console.log("Attendance data:", res);
       setDetails(res.data.attendance || []);
 
-      // ✅ Set full name from the first attendance record
+      //  Set full name from the first attendance record
       if (res.data.attendance && res.data.attendance.length > 0) {
         setFullName(res.data.attendance[0].full_name || '');
       }
@@ -134,7 +134,7 @@ const AttendanceDetail = () => {
   return (
     <div className="p-4 bg-white shadow rounded-lg">
       
-      <h4 className="text-xl font-bold flex  justify-center">{fullName}</h4>
+      <h4 className="text-xl font-bold flex  justify-center">{fullName} ({username})</h4>
       <div className="flex justify-between items-center mb-6">
 
         <h4 className="text-lg font-semibold ">Diary : 
@@ -197,12 +197,12 @@ const AttendanceDetail = () => {
           <table className="min-w-full bg-white border">
             <thead>
               <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left border">#</th>
-                <th className="py-3 px-6 text-left border">DATE</th>
-                <th className="py-3 px-6 text-left border">TYPE</th>
-                <th className="py-3 px-6 text-left border">LOCATION</th>
-                <th className="py-3 px-6 text-left border">IMAGE</th>
-                <th className="py-3 px-6 text-left border">VER | MOBILE</th>
+                <th className="py-3 px-3 text-left border">#</th>
+                <th className="py-3 px-3 text-left border">DATE</th>
+                <th className="py-3 px-3 text-left border">TYPE</th>
+                <th className="py-3 px-3 text-left border">LOCATION</th>
+                <th className="py-3 px-3 text-left border">IMAGE</th>
+                <th className="py-3 px-3 text-left border">VER | MOBILE</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm">
@@ -210,23 +210,32 @@ const AttendanceDetail = () => {
                 const dateTime = formatDate(item.mobile_date && item.mobile_time).split('\n');
                 return (
                   <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="py-3 px-6 text-left border">{(currentPage - 1) * entriesPerPage + index + 1}</td>
-                    <td className="py-3 px-6 text-left border">
+                    <td className="py-2 px-2 text-left border">{(currentPage - 1) * entriesPerPage + index + 1}</td>
+                    <td className="py-2 px-2 text-left border">
                       <div>{dateTime[0]}</div>
                       <div>{dateTime[1]}</div>
                     </td>
-                    <td className="py-3 px-6 text-left border">{item.activity_type === 'IN' ? 'CheckIn' : item.activity_type === 'OUT' ? 'CheckOut' : item.activity_type}</td>
-                    <td className="py-3 px-6 text-left border">{item.location.split(', ').slice(0, 2).join(', ')}</td>
-                    <td className="py-3 px-6 text-left border">
+                    <td className="py-2 px-2 text-left border">{item.activity_type === 'IN' ? 'CheckIn' : item.activity_type === 'OUT' ? 'CheckOut' : item.activity_type}</td>
+                    <td className="py-2 px-2 text-left border">{item.location.split(', ').slice(0, 2).join(', ')}</td>
+                    <td className="py-2 px-2 text-left border">
                       {item.attendance_image && (
                         <img 
                           src={item.attendance_image} 
                           alt="Attendance" 
-                          className="w-[100px] h-[120px]  rounded object-cover" 
+                          className="w-16 h-16  rounded object-cover" 
                         />
                       )}
                     </td>
-                    <td className="py-3 px-6 text-left border">3.0 | 18.3.2iPhone</td>
+         <td className="py-2 px-2
+          text-left border text-xs">
+  {item.mobile_details?.split(',').map((part, index) => (
+    <span key={index}>
+      {part.trim()}
+      {index < item.mobile_details.split(',').length - 1 && ' | '}
+    </span>
+  ))}
+</td>
+
                   </tr>
                 );
               })}

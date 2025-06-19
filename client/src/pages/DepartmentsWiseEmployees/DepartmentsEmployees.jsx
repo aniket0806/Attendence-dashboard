@@ -137,11 +137,11 @@ useEffect(() => {
           <table className="w-full">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-4 py-3 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-16 ">ID</th>
-                <th className="px-4 py-3 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-24">Profile</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-black-500 uppercase tracking-wider w-24">Employee Details</th>
-                <th className="px-4 py-3 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-28">Check In</th>
-                <th className="px-4 py-3 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-28">Check Out</th>
+                <th className="px-2 py-1 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-2 ">ID</th>
+                <th className="px-2 py-1 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-24">Profile</th>
+                <th className="px-2 py-1 text-left text-xs font-bold text-black-500 uppercase tracking-wider w-24">Employee Details</th>
+                <th className="px-2 py-1 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-28">Check In</th>
+                <th className="px-2 py-1 text-center text-xs font-bold text-black-500 uppercase tracking-wider w-28">Check Out</th>
                 {/* <th className="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Status</th> */}
                 <th className="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider w-20">Action</th>
               </tr>
@@ -150,24 +150,24 @@ useEffect(() => {
               {currentEmployees.length > 0 ? (
                 currentEmployees.map((employee, index) => (
                   <tr key={employee.user_id} className="hover:bg-gray-50">
-                    <td className="px-4 py-4 text-center">
+                    <td className="px-2 py-2 text-center">
                       <span className="text-sm text-gray-900">
                        {startIndex + index + 1}
                       </span>
                     </td>
                     
-                    <td className="px-4 py-4">
+                    <td className="px-2 py-2">
                       <div className="flex justify-center">
                         <img 
                           src={employee.profile_img} 
-                          className="w-24 h-28 rounded border object-cover" 
+                          className="w-16 h-16 rounded border object-cover" 
                           alt="Profile"
                           onError={(e) => e.target.src = '/default-profile.png'}
                         />
                       </div>
                     </td>
                     
-                    <td className="px-4 py-4">
+                    <td className="px-2 py-2">
                       <div>
                         <div className="text-sm font-medium text-gray-900">{employee.name}</div>
                         <div className="text-xs text-gray-500">{employee.username}</div>
@@ -175,7 +175,7 @@ useEffect(() => {
                       </div>
                     </td>
                     
-                    <td className="px-4 py-4 text-center">
+                    <td className="px-2 py-2 text-center">
                       {employee.checkin_image ? (
                         <div className="flex flex-col items-center space-y-1">
                           {/* <div className="text-xs font-medium text-green-600">
@@ -186,7 +186,7 @@ useEffect(() => {
                           </div> */}
                           <img 
                             src={employee.checkin_image} 
-                            className="w-24 h-28  border object-cover shadow-sm" 
+                            className="w-16 h-16  border object-cover shadow-sm" 
                             alt="check-in"
                             title="Check-in Image"
                           />
@@ -198,7 +198,7 @@ useEffect(() => {
                       )}
                     </td>
                     
-                    <td className="px-4 py-4 text-center">
+                    <td className="px-2 py-2 text-center">
                       {employee.checkout_image ? (
                         <div className="flex flex-col items-center space-y-1">
                           {/* <div className="text-xs font-medium text-orange-600">
@@ -209,7 +209,7 @@ useEffect(() => {
                           </div> */}
                           <img 
                             src={employee.checkout_image} 
-                            className="w-24 h-24 rounded border object-cover shadow-sm" 
+                            className="w-16 h-16 rounded border object-cover shadow-sm" 
                             alt="check-out"
                             title="Check-out Image"
                           />
@@ -242,7 +242,7 @@ useEffect(() => {
                       )}
                     </td> */}
                     
-                    <td className="px-4 py-4 text-center">
+                    <td className="px-2 py-2 text-center">
                       <Link 
                         to={`/employeedashboard/${employee.username}`} 
                         className="inline-flex items-center px-3 py-1.5 border border-blue-300 text-blue-700 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1 transition-colors"

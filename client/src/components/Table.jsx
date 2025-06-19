@@ -1,7 +1,5 @@
-// Table.jsx
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Calendar, ChevronLeft, ChevronRight, Users, UserCheck, UserX } from "lucide-react";
+import { ChevronLeft, ChevronRight, Users } from "lucide-react";
 
 const Table = ({
   data,
@@ -18,8 +16,7 @@ const Table = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(defaultItemsPerPage);
-
-  // Pagination calculations
+const EmptyIcon = emptyIcon;
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -71,6 +68,7 @@ const Table = ({
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <span className="text-sm text-gray-600">Row Page:</span>
+            
             <select 
               className="px-3 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={itemsPerPage}
@@ -83,6 +81,8 @@ const Table = ({
             <span className="text-sm text-gray-600 ml-2">
               {startIndex + 1}-{Math.min(endIndex, totalItems)} of {totalItems}
             </span>
+              
+
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@ const Table = ({
               {columns.map((column) => (
                 <th 
                   key={column.key} 
-                  className={`px-4 py-3 text-${column.align || 'left'} text-xs font-Bold text-Black-500 uppercase tracking-wider ${column.width ? `w-${column.width}` : ''}`}
+                  className={`px-4 py-3 text-${column.align || 'left'} text-xs font-bold text-gray-700 uppercase tracking-wider ${column.width ? `w-${column.width}` : ''}`}
                 >
                   {column.title}
                 </th>
@@ -107,7 +107,7 @@ const Table = ({
               currentData.map((item, index) => (
                 <tr 
                   key={item.id || index} 
-                  className="hover:bg-gray-50 "
+                  className="hover:bg-gray-50"
                   onClick={() => onRowClick && onRowClick(item)}
                 >
                   {columns.map((column) => (
@@ -115,9 +115,11 @@ const Table = ({
                       key={column.key} 
                       className={`px-4 py-4 text-${column.align || 'left'}`}
                     >
-                      {renderCell ? renderCell(column.key, item) : (
-                        column.render ? column.render(item) : item[column.key]
-                      )}
+                      {renderCell
+                        ? renderCell(column.key, item, index + startIndex)
+                        : column.render
+                        ? column.render(item, index + startIndex)
+                        : item[column.key]}
                     </td>
                   ))}
                 </tr>
@@ -126,7 +128,8 @@ const Table = ({
               <tr>
                 <td colSpan={columns.length} className="px-4 py-12 text-center">
                   <div className="flex flex-col items-center text-gray-500">
-                    <emptyIcon size={48} className="mb-4 text-gray-300" />
+                    {/* <emptyIcon size={48} className="mb-4 text-gray-300" /> */}
+                    {EmptyIcon && <EmptyIcon size={48} className="mb-4 text-gray-300" />}
                     <div className="text-sm">{emptyMessage}</div>
                   </div>
                 </td>
@@ -135,7 +138,7 @@ const Table = ({
           </tbody>
         </table>
       </div>
-      
+
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
@@ -144,7 +147,6 @@ const Table = ({
               Page {currentPage} of {totalPages} ({totalItems} total entries)
             </div>
             <nav className="flex items-center space-x-1">
-              {/* Previous Button */}
               <button 
                 className={`flex items-center px-3 py-2 text-sm font-medium rounded-md ${
                   currentPage === 1 
@@ -156,8 +158,7 @@ const Table = ({
               >
                 <ChevronLeft size={16} />
               </button>
-              
-              {/* Page Numbers */}
+
               {totalPages <= 7 ? (
                 Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
                   <button 
@@ -190,8 +191,7 @@ const Table = ({
                   </button>
                 ))
               )}
-              
-              {/* Next Button */}
+
               <button 
                 className={`flex items-center px-3 py-2 text-sm font-medium rounded-md ${
                   currentPage === totalPages 
